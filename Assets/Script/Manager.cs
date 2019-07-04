@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Manager : MonoBehaviour {
-    ItemList itemList; //スプリクトを入れる
+    ItemList itemList;
+    Ray ray;
 
-
-	// Use this for initialization
-	void Start () {
-        itemList = ItemList.GetInstance();
-        itemList.InitItemList();
+    // Use this for initialization
+    void Start()
+    {
+        itemList = new ItemList();
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+        //オブジェクトがクリックされたとき
+        //オブジェクトの名前を渡す
+    }
 }
