@@ -18,7 +18,6 @@ public class Manager : MonoBehaviour
     RaycastHit hit;
     public LayerMask mask;
 
-
     GameObject ClickObject; //UIをクリックしたか
 
     // Use this for initialization
@@ -50,6 +49,11 @@ public class Manager : MonoBehaviour
                 itemList.ItemSelect(buttonNum, itemName);
                 itemList.CloseSelect(buttonNum);
             }
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            itemList.DeletItem();
+            Debug.Log("1");
         }
     }
 

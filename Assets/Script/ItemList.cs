@@ -13,7 +13,7 @@ public class ItemList
 
     List<GameObject> itemButtonObj = new List<GameObject>(); //アイテムリスト（ボタン）のオブジェクト
     List<int> itemSelectNum = new List<int>(); //アイテムリスト（ボタン）が有効か　
-    //0=空　1=入っている 2=入っている＆選択中
+    //0=空　1=入っている 2=入っている＆選択中 enum
     const int NO_IMAGE = 0;
     const int IN_ITEM = 1;
     const int SELECTING = 2;
@@ -54,9 +54,10 @@ public class ItemList
     }
 
 
-    //アイテムを選択状態にする
+
     public void ItemSelect(int buttonNum, string itemImageName)
     {
+        //アイテムを選択状態にする
         if (itemSelectNum[buttonNum] == IN_ITEM)
         {
 
@@ -76,6 +77,31 @@ public class ItemList
 
                 itemSelectNum[i] = IN_ITEM;
                 itemButtonObj[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + itemName, typeof(Sprite)) as Sprite;
+            }
+        }
+    }
+
+
+    //選択されているアイテムを削除
+    public void DeletItem()
+    {
+        for (int i = 0; i < itemSelectNum.Count; i++) 
+        {
+            if (itemSelectNum[i] == SELECTING)
+            {
+                //string itemName = itemButtonObj[i].GetComponent<Image>().sprite.name.Substring(selectImageName.Length);
+
+                //itemSelectNum[i] = NO_IMAGE;
+                //itemButtonObj[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noItemImage, typeof(Sprite)) as Sprite;
+
+            for(int d = i; d < itemSelectNum.Count-1; d++)　//選択されていた番号から後ろ //最後のアイテムはno_itemになるので何もしない
+                {
+                    //リストの後ろのアイテムに
+                    itemSelectNum[d] = itemSelectNum[d+1];
+                    itemButtonObj[d].GetComponent<Image>().sprite = itemButtonObj[d+1].GetComponent<Image>().sprite;
+                   // Debug.Log(++d); //なぜ二つずつ増える？
+
+                }
             }
         }
     }

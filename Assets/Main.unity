@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 305551580}
   - component: {fileID: 305551579}
   - component: {fileID: 305551578}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -925,7 +925,7 @@ GameObject:
   - component: {fileID: 1031187920}
   - component: {fileID: 1031187919}
   - component: {fileID: 1031187918}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
 --- !u!1 &1348101441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,7 +1558,7 @@ GameObject:
   - component: {fileID: 1420583353}
   - component: {fileID: 1420583352}
   - component: {fileID: 1420583351}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
