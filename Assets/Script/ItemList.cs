@@ -111,9 +111,16 @@ public class ItemList
         }
     }
 
-    public void Open()
+    //アイテム詳細を閉じる 
+    public int test()
     {
-
+        return itemSelectNum.FindIndex(x => x == (int)Stat.open);
+    }
+    public void Close(int openNow)
+    {
+            itemSelectNum[openNow] = (int)Stat.inItem;
+            itemDetailCanvas.GetComponent<Image>().sprite = Resources.Load(imageFolderName + noItemImage, typeof(Sprite)) as Sprite;
+            itemDetailCanvas.SetActive(false);
     }
 
     //選択されているアイテムを削除

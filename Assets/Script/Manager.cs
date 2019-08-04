@@ -39,8 +39,21 @@ public class Manager : MonoBehaviour
 
             if (ClickObject == null) //UIではない→ゲーム画面をクリックしたとき
             {
-                GetObject();
+                //openがあるなら閉じる
+                int openNow = itemList.test();
+                if (openNow != -1)
+                {
+                    Debug.Log(openNow);
+                    itemList.Close(openNow);
+                }
+
+                //objの検出
+                else
+                {
+                    GetObject();
+                }
             }
+            
             else if (ClickObject.tag == "ItemListButton") 
             {
                 int buttonNum = itemList.ButtonNum(ClickObject);
