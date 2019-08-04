@@ -50,6 +50,7 @@ public class Manager : MonoBehaviour
                 itemList.CloseSelect(buttonNum);
             }
         }
+
         if (Input.GetMouseButtonUp(1))
         {
             itemList.DeletItem();
