@@ -8,13 +8,15 @@ public class ItemList
 {
 
     string imageFolderName = "Image/"; //アイテムの画像のフォルダ名
-    string selectImageName = "Selected";
+    string selectImageName = "Select";
     string selectOpenName = "Image";
+    string itemOpenName = "Open";
     string noItemImage = "no_item"; //何も入ってないときに表示する画像
     string noSelect = "None"; //何も入ってないときに表示する画像
-    string imageName; //選択したオブジェクトの名前を保管する //画像別にすればこれ要らないんじゃあああああああ
+                              // string imageName; //選択したオブジェクトの名前を保管する //画像別にすればこれ要らないんじゃあああああああ
 
     List<GameObject> itemButtonObj = new List<GameObject>(); //アイテムリスト（ボタン）のオブジェクト
+    List<GameObject> selectImg = new List<GameObject>(); //選択枠
     List<int> itemSelectNum = new List<int>(); //アイテムリスト（ボタン）が有効か　
 
     GameObject itemDetailCanvas; //画像の詳細表示をするobj
@@ -31,13 +33,17 @@ public class ItemList
 
     public ItemList()
     {
-    //リストにボタンを入れる、画像を初期化
+        //リストにボタンを入れる、画像を初期化
         int i = 0; //ボタンの番号
         while (GameObject.Find("Button (" + i.ToString() + ")") != null)
         {
-            itemButtonObj.Add(GameObject.Find("Button (" + i.ToString() + ")"));
             itemSelectNum.Add(0);
+
+            itemButtonObj.Add(GameObject.Find("Button (" + i.ToString() + ")"));
             itemButtonObj[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noItemImage, typeof(Sprite)) as Sprite;
+
+            selectImg.Add(GameObject.Find("Image (" + i.ToString() + ")"));
+            selectImg[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
             i++;
         }
         //詳細表示をoff
@@ -76,23 +82,24 @@ public class ItemList
         //アイテムを選択状態にする
         if (itemSelectNum[buttonNum] == (int)Stat.inItem)
         {
-            imageName = itemImageName;
+            // imageName = itemImageName;
             itemSelectNum[buttonNum] = (int)Stat.selecting;
-            itemButtonObj[buttonNum].GetComponent<Image>().sprite = Resources.Load(imageFolderName + selectImageName + itemImageName, typeof(Sprite)) as Sprite;
+            selectImg[buttonNum].GetComponent<Image>().sprite = Resources.Load(imageFolderName + selectImageName, typeof(Sprite)) as Sprite;
         }
         //選択状態だったら開く
-      else  if (itemSelectNum[buttonNum] == (int)Stat.selecting)
+        else if (itemSelectNum[buttonNum] == (int)Stat.selecting)
         {
             //他にopenがあれば直す
             int openNow = itemSelectNum.FindIndex(x => x == (int)Stat.open);
-            if (openNow != -1) 
+            if (openNow != -1)
             {
-                 itemSelectNum[openNow] = (int)Stat.inItem;
+                itemSelectNum[openNow] = (int)Stat.inItem;
+                selectImg[openNow].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
             }
 
             itemSelectNum[buttonNum] = (int)Stat.open;
-            itemButtonObj[buttonNum].GetComponent<Image>().sprite = Resources.Load(imageFolderName +  imageName, typeof(Sprite)) as Sprite; //テスト
-            itemDetailCanvas.GetComponent<Image>().sprite = Resources.Load(imageFolderName + selectOpenName +imageName, typeof(Sprite)) as Sprite;           
+            selectImg[buttonNum].GetComponent<Image>().sprite = Resources.Load(imageFolderName + itemOpenName, typeof(Sprite)) as Sprite;
+            itemDetailCanvas.GetComponent<Image>().sprite = Resources.Load(imageFolderName + selectOpenName + itemImageName, typeof(Sprite)) as Sprite;
             itemDetailCanvas.SetActive(true);
         }
     }
@@ -103,10 +110,8 @@ public class ItemList
         {
             if (itemSelectNum[i] == (int)Stat.selecting && i != buttonNum)
             {
-                string itemName = itemButtonObj[i].GetComponent<Image>().sprite.name.Substring(selectImageName.Length);
-
                 itemSelectNum[i] = (int)Stat.inItem;
-                itemButtonObj[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + itemName, typeof(Sprite)) as Sprite;
+                selectImg[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
             }
         }
     }
@@ -118,9 +123,9 @@ public class ItemList
     }
     public void Close(int openNow)
     {
-            itemSelectNum[openNow] = (int)Stat.inItem;
-            itemDetailCanvas.GetComponent<Image>().sprite = Resources.Load(imageFolderName + noItemImage, typeof(Sprite)) as Sprite;
-            itemDetailCanvas.SetActive(false);
+        itemSelectNum[openNow] = (int)Stat.inItem;
+        selectImg[openNow].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
+        itemDetailCanvas.SetActive(false);
     }
 
     //選択されているアイテムを削除
@@ -130,6 +135,8 @@ public class ItemList
         {
             if (itemSelectNum[i] == (int)Stat.selecting)
             {
+                selectImg[i].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
+
                 for (int d = i; d < itemSelectNum.Count - 1; d++)　//選択されていた番号から後ろ //最後のアイテムはno_itemになるので何もしない
                 {
                     //リストの後ろのアイテムに
