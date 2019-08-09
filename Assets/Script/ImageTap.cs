@@ -26,12 +26,14 @@ public class ImageTap
     }
 
 
-    public void ClickDetail()
+    public int ClickDetail()
     {
 
         Vector2 panelSize = new Vector2(detailScreenSize.x / divX, detailScreenSize.y / divY); //1分割のサイズ
         Vector2 clickDetailPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y) - gameScreenSize * 0.1f; //クリックした座標から空白分だけずらす
-        Debug.Log((int)(clickDetailPos.y / panelSize.y )+ ":" + (int)(clickDetailPos.x / panelSize.x));
+        //Debug.Log((int)(clickDetailPos.y / panelSize.y )+ ":" + (int)(clickDetailPos.x / panelSize.x));
+        Debug.Log((int)(clickDetailPos.y / panelSize.y) * divY + (int)(clickDetailPos.x / panelSize.x) + 1);
+        return ((int)(clickDetailPos.y / panelSize.y) * divY) + (int)(clickDetailPos.x / panelSize.x) + 1;
     }
 
 

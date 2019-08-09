@@ -13,7 +13,6 @@ public class ItemList
     string itemOpenName = "Open";
     string noItemImage = "no_item"; //何も入ってないときに表示する画像
     string noSelect = "None"; //何も入ってないときに表示する画像
-                              // string imageName; //選択したオブジェクトの名前を保管する //画像別にすればこれ要らないんじゃあああああああ
 
     List<GameObject> itemButtonObj = new List<GameObject>(); //アイテムリスト（ボタン）のオブジェクト
     List<GameObject> selectImg = new List<GameObject>(); //選択枠
@@ -30,6 +29,7 @@ public class ItemList
         open
     }
 
+    public List<int> ItemSelectNum { get { return itemSelectNum; } }
 
     public ItemList()
     {
@@ -150,5 +150,37 @@ public class ItemList
     }
 
 
+
+    //アイテム合成
+    public void ItemComp(int clickDev)
+    {
+        //OPEN中のアイテムを探し、その番号のアイテム名を習得
+        int openNow = itemSelectNum.FindIndex(x => x == (int)Stat.open);
+        string openObj = itemButtonObj[openNow].GetComponent<Image>().sprite.name;
+
+        //select中のアイテムを探し、その番号のアイテム名を習得
+        int selectNow = ItemSelectNum.FindIndex(x => x == (int)Stat.selecting);
+        string selectObj="";
+       if (selectNow != -1)
+        { selectObj = itemButtonObj[selectNow].GetComponent<Image>().sprite.name; }
+
+        switch (openObj)
+        {
+            case "Red":
+                if((clickDev==1|| clickDev == 2|| clickDev == 3) && selectObj=="Blue")
+                {
+                    Debug.Log("むらさき");
+                    //open中のものを合成後に。詳細画像を合成後に。selectを削除
+                    itemButtonObj[openNow].GetComponent<Image>().sprite = Resources.Load(imageFolderName + "Purple", typeof(Sprite)) as Sprite;
+
+                    itemDetailCanvas.GetComponent<Image>().sprite = Resources.Load(imageFolderName + selectOpenName + "Purple", typeof(Sprite)) as Sprite;
+
+                    itemButtonObj[selectNow].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noItemImage, typeof(Sprite)) as Sprite;
+                    itemSelectNum[selectNow] = (int)Stat.noImage;
+                    selectImg[selectNow].GetComponent<Image>().sprite = Resources.Load(imageFolderName + noSelect, typeof(Sprite)) as Sprite;
+                }
+                break;
+        }
+    }
 
 }
