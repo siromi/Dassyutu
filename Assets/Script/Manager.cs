@@ -12,6 +12,7 @@ public class Manager : MonoBehaviour
 
     //Instanse
     ItemList itemList;
+    ImageTap imageTap;
 
     //Ray
     Ray ray;
@@ -27,6 +28,7 @@ public class Manager : MonoBehaviour
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 
         itemList = new ItemList();
+        imageTap = new ImageTap();
     }
 
     // Update is called once per frame
@@ -36,11 +38,24 @@ public class Manager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ClickObject = eventSystem.currentSelectedGameObject;
+            Debug.Log(ClickObject);
 
             if (ClickObject == null) //UIではない→ゲーム画面をクリックしたとき
             {
-                GetObject();
+               //openがあるなら閉じる
+                int openNow = itemList.test();
+                if (openNow != -1)
+                {
+                    itemList.Close(openNow);
+                }
+
+                //objの検出
+                else
+                {
+                    GetObject();
+                }
             }
+            
             else if (ClickObject.tag == "ItemListButton") 
             {
                 int buttonNum = itemList.ButtonNum(ClickObject);
@@ -49,7 +64,12 @@ public class Manager : MonoBehaviour
                 itemList.ItemSelect(buttonNum, itemName);
                 itemList.CloseSelect(buttonNum);
             }
+            else if (ClickObject.tag == "DetailView")
+            {
+                imageTap.ClickDetail();
+            }
         }
+
         if (Input.GetMouseButtonUp(1))
         {
             itemList.DeletItem();
