@@ -66,14 +66,13 @@ public class Manager : MonoBehaviour
             }
             else if (ClickObject.tag == "DetailView")
             {
-                imageTap.ClickDetail();
+               itemList.ItemComp( imageTap.ClickDetail());
             }
         }
 
         if (Input.GetMouseButtonUp(1))
         {
             itemList.DeletItem();
-            Debug.Log("1");
         }
     }
 

@@ -239,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\ImageTap.cs" />
+    <Compile Include="Assets\Script\ItemComp.cs" />
     <Compile Include="Assets\Script\ItemList.cs" />
     <Compile Include="Assets\Script\Manager.cs" />
   </ItemGroup>
